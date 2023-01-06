@@ -1,13 +1,43 @@
 export <template>
-  <h1>Food Detail</h1>
+  <div class="food-detail">
+    <Navbar />
+    <div class="container">
+      <!-- breadcrumb -->
+      <div class="row mt-5">
+        <div class="col">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <router-link to="/" class="text-dark">Home</router-link>
+              </li>
+              <li class="breadcrumb-item">
+                <router-link to="/foods" class="text-dark"
+                  >Food Detail</router-link
+                >
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                Food Order
+              </li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ? -->
+    </div>
+  </div>
 </template>
 
 <script>
-export default {
+import Navbar from "@/components/Navbar.vue";
 
-}
+export default {
+  name: "FoodDetail",
+  components: {
+    Navbar,
+  },
+};
 </script>
 
 <style>
-
 </style>
