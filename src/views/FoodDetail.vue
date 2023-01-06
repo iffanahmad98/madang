@@ -12,7 +12,7 @@ export <template>
               </li>
               <li class="breadcrumb-item">
                 <router-link to="/foods" class="text-dark"
-                  >Food Detail</router-link
+                  >Foods</router-link
                 >
               </li>
               <li class="breadcrumb-item active" aria-current="page">
@@ -24,18 +24,58 @@ export <template>
       </div>
 
       <!-- ? -->
+      <div class="row mt-3">
+        <div class="col-md-6">
+            <img :src="'../assets/images/'+ product.gambar" class="img-fluid shadow" />
+        </div>
+        <div class="col-md-6">
+            <h2><strong>{{ product.nama }}</strong></h2>
+            <hr>
+            <h4>Harga <strong>Rp .{{ product.harga }}</strong></h4>
+            <form class="mt-4">
+                <div class="form-group">
+                    <label for="jumlah_pesanan">Jumlah Pesanan</label>
+                    <input type="number" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label for="keterangan">Keterangan</label>
+                    <textarea class="form-control" placeholder="Keterangan spt : pedas, nasi setengah .."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success"><b-icon-cart></b-icon-cart>Pesan</button>
+            </form>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import axios from 'axios';
 
 export default {
   name: "FoodDetail",
   components: {
     Navbar,
   },
+  data() {
+    return {
+        product: {}
+    }
+  },
+  methods: {
+    setProduct(data) {
+        this.product = data
+    }
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/products/"+this.$route.params.id)
+      .then((response) => this.setProduct(response.data))
+      .catch((error) => console.log("GAGAL", error));
+  },
+
 };
 </script>
 
