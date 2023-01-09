@@ -65,6 +65,10 @@
                     <strong>Total Harga :</strong>
 
                   </td>
+                  <td align="right">
+                    <strong>Rp. {{ totalHarga }}</strong>
+                  </td>
+                  <td></td>
                 </tr>
 
 
@@ -102,6 +106,13 @@ export default {
       .then((response) => this.setKeranjangs(response.data))
       .catch((error) => console.log("GAGAL", error));
   },
+  computed: {
+    totalHarga() {
+      return this.keranjangs.reduce(function(items, data) {
+        return items+(data.products.harga*data.jumlah_pemesanan)
+      }, 0)
+    }
+  }
 };
 </script>
 
