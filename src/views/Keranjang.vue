@@ -21,7 +21,7 @@
         </div>
       </div>
 
-      <div class="ro">
+      <div class="row">
         <div class="col">
           <h2>Keranjang <strong>Saya</strong></h2>
           <div class="table-responsive mt-3">
@@ -39,24 +39,35 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
+                <tr
+                  v-for="(keranjang, index) in keranjangs"
+                  :key="keranjang.id"
+                >
+                  <th>{{ index + 1 }}</th>
+                  <td>
+                    <img
+                      :src="'../assets/images/' + keranjang.products.gambar"
+                      class="img-fluid shadow" width="250"
+                    />
+                  </td>
+                  <td><strong> {{ keranjang.products.nama }} </strong></td>
+                  <td>{{ keranjang.keterangan ? keranjang.keterangan : "-" }}</td>
+                  <td>{{ keranjang.jumlah_pemesanan }}</td>
+                  <td align="right">Rp. {{ keranjang.products.harga }}</td>
+                  <td align="right"><strong>Rp. {{ keranjang.products.harga*keranjang.jumlah_pemesanan }}</strong></td>
+                  <td align="center" class="text-danger">
+                    <b-icon-trash></b-icon-trash>
+                  </td>
                 </tr>
+
                 <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
+                  <td colspan="6" align="right">
+                    <strong>Total Harga :</strong>
+
+                  </td>
                 </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
+
+
               </tbody>
             </table>
           </div>
@@ -68,11 +79,28 @@
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import axios from "axios";
 
 export default {
   name: "KeranjangView",
   components: {
     Navbar,
+  },
+  data() {
+    return {
+      keranjangs: [],
+    };
+  },
+  methods: {
+    setKeranjangs(data) {
+      this.keranjangs = data;
+    },
+  },
+  mounted() {
+    axios
+      .get("http://localhost:3000/keranjangs")
+      .then((response) => this.setKeranjangs(response.data))
+      .catch((error) => console.log("GAGAL", error));
   },
 };
 </script>
