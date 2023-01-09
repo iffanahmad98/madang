@@ -1,6 +1,6 @@
 <template>
   <div class="keranjang">
-    <Navbar />
+    <Navbar :updateKeranjang="keranjangs" />
     <div class="container">
       <!-- breadcrumb -->
       <div class="row mt-4">
@@ -47,31 +47,42 @@
                   <td>
                     <img
                       :src="'../assets/images/' + keranjang.products.gambar"
-                      class="img-fluid shadow" width="250"
+                      class="img-fluid shadow"
+                      width="250"
                     />
                   </td>
-                  <td><strong> {{ keranjang.products.nama }} </strong></td>
-                  <td>{{ keranjang.keterangan ? keranjang.keterangan : "-" }}</td>
+                  <td>
+                    <strong> {{ keranjang.products.nama }} </strong>
+                  </td>
+                  <td>
+                    {{ keranjang.keterangan ? keranjang.keterangan : "-" }}
+                  </td>
                   <td>{{ keranjang.jumlah_pemesanan }}</td>
                   <td align="right">Rp. {{ keranjang.products.harga }}</td>
-                  <td align="right"><strong>Rp. {{ keranjang.products.harga*keranjang.jumlah_pemesanan }}</strong></td>
+                  <td align="right">
+                    <strong
+                      >Rp.
+                      {{
+                        keranjang.products.harga * keranjang.jumlah_pemesanan
+                      }}</strong
+                    >
+                  </td>
                   <td align="center" class="text-danger">
-                    <b-icon-trash></b-icon-trash>
+                    <b-icon-trash
+                      @click="hapusKeranjang(keranjang.id)"
+                    ></b-icon-trash>
                   </td>
                 </tr>
 
                 <tr>
                   <td colspan="6" align="right">
                     <strong>Total Harga :</strong>
-
                   </td>
                   <td align="right">
                     <strong>Rp. {{ totalHarga }}</strong>
                   </td>
                   <td></td>
                 </tr>
-
-
               </tbody>
             </table>
           </div>
@@ -99,6 +110,25 @@ export default {
     setKeranjangs(data) {
       this.keranjangs = data;
     },
+    hapusKeranjang(id) {
+      axios
+        .delete("http://localhost:3000/keranjangs/" + id)
+        .then(() => {
+          this.$toast.error("Sukses Hapus Pesanan", {
+            type: "error",
+            position: "top-right",
+            duration: 3000,
+            dismissible: true,
+          });
+
+          //update data keranjang
+          axios
+            .get("http://localhost:3000/keranjangs")
+            .then((response) => this.setKeranjangs(response.data))
+            .catch((error) => console.log("GAGAL", error));
+        })
+        .catch((error) => console.log("GAGAL", error));
+    },
   },
   mounted() {
     axios
@@ -108,11 +138,11 @@ export default {
   },
   computed: {
     totalHarga() {
-      return this.keranjangs.reduce(function(items, data) {
-        return items+(data.products.harga*data.jumlah_pemesanan)
-      }, 0)
-    }
-  }
+      return this.keranjangs.reduce(function (items, data) {
+        return items + data.products.harga * data.jumlah_pemesanan;
+      }, 0);
+    },
+  },
 };
 </script>
 

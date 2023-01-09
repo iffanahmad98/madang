@@ -28,7 +28,7 @@ export <template>
           <li class="nav-item">
             <router-link class="nav-link" to="/keranjang"
               >Keranjang<b-icon-bag></b-icon-bag
-              ><span class="badge badge-success ml-2">{{ jumlah_pesanans.length }}</span></router-link
+              ><span class="badge badge-success ml-2">{{ updateKeranjang ? updateKeranjang.length : jumlah_pesanans.length }}</span></router-link
             >
           </li>
         </ul>
@@ -47,6 +47,7 @@ export default {
       jumlah_pesanans: []
     }
   },
+  props: ['updateKeranjang'],
   methods: {
     setJumlah(data) {
       this.jumlah_pesanans = data
