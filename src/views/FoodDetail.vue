@@ -3,7 +3,7 @@ export <template>
     <Navbar />
     <div class="container">
       <!-- breadcrumb -->
-      <div class="row mt-5">
+      <div class="row mt-4">
         <div class="col">
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
