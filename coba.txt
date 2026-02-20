@@ -32,3 +32,4 @@ update github2
 update github3
 update gitea
 update gitea2
+update gitea3
