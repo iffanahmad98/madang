@@ -30,3 +30,4 @@ update in gitea branch main
 update github1
 update github2
 update github3
+update gitea
