@@ -18,3 +18,4 @@ coba in gitea6
 coba in github10
 coba in github11
 coba in github12
+coba in gitea7
