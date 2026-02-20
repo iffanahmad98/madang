@@ -24,3 +24,4 @@ asdasdddd
 updateee
 github update
 github update branch patc1
+gitea update branch patc1
